@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.leetcode</groupId>
+    <artifactId>leetcode</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <scm>
+        <connection>scm:git:https://github.com/kuchensheng/mermaid-framework-parent.git</connection>
+        <developerConnection>scm:git:https://github.com/kuchensheng/mermaid-framework-parent.git</developerConnection>
+        <url>https://github.com/kuchensheng/mermaid-framework-parent</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <name>Maven</name>
+    <!-- FIXME change it to the project's website -->
+    <url>http://maven.apache.org/</url>
+    <inceptionYear>2001</inceptionYear>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sxc-snapshots</id>
+            <url>http://121.40.208.242:8081/repository/sxc-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>sxc-release</id>
+            <url>http://121.40.208.242:8081/repository/sxc-release/</url>
+        </repository>
+    </distributionManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+    <repositories>
+        <repository>
+            <id>nexus-aliyun</id>
+            <name>nexus-aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+</project>
