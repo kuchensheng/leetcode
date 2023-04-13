@@ -19,60 +19,65 @@ package middle
 1 <= instructions.length <= 100
 instructions[i] 仅包含 'G', 'L', 'R'
 */
-const (
-	NORTH int = iota + 1
-	SOUTH
-	EST
-	WES
-)
-
 type location struct {
 	First  int
 	Second int
-	Dir    int // ± 1
-	Xory   bool
+	XFlag  int
+	YFlag  int
 }
 
 func isRobotBounded(instructions string) bool {
-	init := &location{0, 0, NORTH, true}
+	init := &location{0, 0, 0, 1}
 
-	change := func(val int, dir int) int {
-		switch dir {
-		case NORTH:
-			fallthrough
-		case EST:
-			val++
-		default:
-			val--
-		}
-		return val
-	}
-	move := func(l *location, instruction byte) {
-		switch instruction {
-		case 'G':
-			if l.Xory {
-				l.Second += change(l.Second, l.Dir)
-			} else {
-				l.First += change(l.Second, l.Dir)
-			}
+	change := func(l *location, i byte) {
+		switch i {
 		case 'R':
-			fallthrough
-		case 'L':
-			//反转
-			if l.Xory {
-				l.Xory = false
+			//第一象限
+			if l.XFlag == 0 && l.YFlag == 1 {
+				l.XFlag, l.YFlag = 1, 0
+			} else if l.XFlag == 1 && l.YFlag == 0 {
+				l.XFlag, l.YFlag = 0, -1
+			} else if l.XFlag == 0 && l.YFlag == -1 {
+				l.XFlag, l.YFlag = -1, 0
 			} else {
-				l.Xory = true
+				l.XFlag, l.YFlag = 0, 1
 			}
-		default:
-
+		case 'L':
+			//第一象限
+			if l.XFlag == 0 && l.YFlag == 1 {
+				l.XFlag, l.YFlag = -1, 0
+			} else if l.XFlag == -1 && l.YFlag == 0 {
+				l.XFlag, l.YFlag = 0, -1
+			} else if l.XFlag == 0 && l.YFlag == -1 {
+				l.XFlag, l.YFlag = 1, 0
+			} else {
+				l.XFlag, l.YFlag = 0, 1
+			}
 		}
 	}
+	move := func(l *location) {
+		l.First += l.XFlag
+		l.Second += l.YFlag
+	}
+	circle := 0
+	hasG := false
 	length := len(instructions)
-	for i := 0; i < length; i++ {
-		move(init, instructions[i])
-		println(init.First, init.Second)
+	for i := 0; i < length*4; i++ {
+		idx := i % length
+		switch instructions[idx] {
+		case 'G':
+			hasG = true
+			move(init)
+		default:
+			change(init, instructions[idx])
+		}
+		if init.First == 0 && init.Second == 0 && hasG {
+			circle += 1
+		}
+	}
+	if !hasG {
+		return true
 	}
 
-	return init.First == 0 && init.Second == 0
+	return init.First == 0 && init.Second == 0 && circle > 0
 }

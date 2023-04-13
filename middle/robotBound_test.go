@@ -12,6 +12,8 @@ func Test_isRobotBounded(t *testing.T) {
 		want bool
 	}{
 		{"0Test", args{"GGLLGG"}, true},
+		{"1Test", args{"GL"}, true},
+		{"2Test", args{"LRRRRLLLRL"}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
